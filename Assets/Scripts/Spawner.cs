@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour
     public Transform[] spawnPlaces;
     public float minWait = 0.5f;
     public float maxWait = 1.3f;
+    public float minForce = 10f;
+    public float maxForce = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +27,16 @@ public class Spawner : MonoBehaviour
     {
         while (true)
         {
+            Transform t = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
             yield return new WaitForSeconds(Random.Range(minWait,maxWait));
-            GameObject fruit = Instantiate(fruitToSpawnPrefab, transform.position , transform.rotation);
+            GameObject fruit = Instantiate(fruitToSpawnPrefab, t.transform.position , t.transform.rotation);
+
+            fruit.GetComponent<Rigidbody2D>().AddForce(
+                t.transform.up*Random.Range(minForce,maxForce), ForceMode2D.Impulse);
+
             Debug.Log("spawning a fruit");
+
+            Destroy(fruit, 5f);
         }
     }
 }
