@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
             fruit.GetComponent<Rigidbody2D>().AddForce(
                 t.transform.up*Random.Range(minForce,maxForce), ForceMode2D.Impulse);
 
-            Debug.Log("spawning a fruit");
+            //Debug.Log("spawning a fruit");
 
             Destroy(fruit, 5f);
         }
