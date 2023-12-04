@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int highscore;
     public Text scoreText;
     public Text highscoreText;
+    public Text comboText;
     [Header("Game Over Elements")]
     public GameObject gameOverPanel;
 
@@ -24,7 +25,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //PlayerPrefs.SetInt("Highscore", 15);
         getHighscore();
+        comboText.enabled = false;
     }
     public void IncreaseScore(int addedPoints)
     {
@@ -67,22 +70,31 @@ public class GameManager : MonoBehaviour
     IEnumerator ComboTimer()
     {
         // Wait for a set amount of time (e.g., 5 seconds)
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         // Check the condition
         if (comboCount > 2)
         {
             // Condition was met within the specified time
-            Debug.Log("Combo! "+comboCount.ToString());
+            //Debug.Log("Combo! "+comboCount.ToString());
+            comboText.text = comboCount.ToString() + " FRUIT COMBO! \n +" + comboCount.ToString();
+            comboText.enabled = true;
+            IncreaseScore(comboCount);
+            Invoke("DisableText", 3f);
             comboCount = 0;
             // Perform the action or call a method
         }
         else
         {
             // Condition was not met within the specified time
-            Debug.Log(".");
+            //Debug.Log(".");
             comboCount = 0;
             // Handle the case where the condition is not met
         }
+    }
+    void DisableText()
+    {
+        // Disable the text after 3 seconds
+        comboText.enabled = false;
     }
 }
