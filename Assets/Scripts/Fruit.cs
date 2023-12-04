@@ -34,6 +34,7 @@ public class Fruit : MonoBehaviour
         }
 
         myGameManager.IncreaseScore(scoreAmount);
+        myGameManager.CheckForCombo();
 
         Destroy(inst, 5f);
 

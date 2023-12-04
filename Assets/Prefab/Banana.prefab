@@ -145,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slicedFruitPrefab: {fileID: 3710194313487897418, guid: 07481f97a052ecd458624b6dd4ab0658, type: 3}
   explosionRadius: 5
+  scoreAmount: 3

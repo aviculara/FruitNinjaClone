@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     public float minForce = 10f;
     public float maxForce = 20f;
     public int chanceOfBomb = 10;
+    public int chanceOfCombo = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -36,26 +37,48 @@ public class Spawner : MonoBehaviour
 
             GameObject toSpawn = null;
 
-            float rnd = Random.Range(0, 100);
+            float rnd;
 
-            if(rnd < chanceOfBomb)
+            rnd = Random.Range(0, 100);
+
+            if (rnd < chanceOfCombo)
             {
-                toSpawn = bombPrefab;
+                foreach(Transform spawnplace in spawnPlaces)
+                {
+                    toSpawn = fruitToSpawnPrefabs[Random.Range(0, fruitToSpawnPrefabs.Length)];
+                    GameObject fruit = Instantiate(
+                        toSpawn, spawnplace.transform.position, spawnplace.transform.rotation);
+
+                    fruit.GetComponent<Rigidbody2D>().AddForce(
+                        spawnplace.transform.up * Random.Range(minForce, maxForce), ForceMode2D.Impulse);
+
+                    Destroy(fruit, 5f);
+                }
+
             }
             else
             {
-                toSpawn = fruitToSpawnPrefabs[Random.Range(0, fruitToSpawnPrefabs.Length)];
+                rnd = Random.Range(0, 100);
+
+                if (rnd < chanceOfBomb)
+                {
+                    toSpawn = bombPrefab;
+                }
+                else
+                {
+                    toSpawn = fruitToSpawnPrefabs[Random.Range(0, fruitToSpawnPrefabs.Length)];
+                }
+
+
+                GameObject fruit = Instantiate(toSpawn, t.transform.position, t.transform.rotation);
+
+                fruit.GetComponent<Rigidbody2D>().AddForce(
+                    t.transform.up * Random.Range(minForce, maxForce), ForceMode2D.Impulse);
+
+                //Debug.Log("spawning a fruit");
+
+                Destroy(fruit, 5f);
             }
-            
-
-            GameObject fruit = Instantiate(toSpawn, t.transform.position , t.transform.rotation);
-
-            fruit.GetComponent<Rigidbody2D>().AddForce(
-                t.transform.up*Random.Range(minForce,maxForce), ForceMode2D.Impulse);
-
-            //Debug.Log("spawning a fruit");
-
-            Destroy(fruit, 5f);
         }
     }
 }
