@@ -35,14 +35,16 @@ public class Fruit : MonoBehaviour
      * GameObject inst = Instantiate(slicedFruitPrefab, arbitraryPosition, arbitraryRotation);
      */
 
-   
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Blade b = collision.GetComponent<Blade>();
+        
+        if(!b)
         {
-            CreateSlicedFruit();
+            return;
         }
+        CreateSlicedFruit();
     }
+
+    
 }
