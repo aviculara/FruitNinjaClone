@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("Score Elements")]
     public int score;
     public int highscore;
+    public float comboWait = 1f;
     public Text scoreText;
     public Text highscoreText;
     public Text comboText;
@@ -56,21 +57,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void CheckForCombo()
+    public void CheckForCombo(Vector3 pos)
     {
         if (comboCount == 0)
         {
-            StartCoroutine(ComboTimer());
+            StartCoroutine(ComboTimer(pos));
         }
 
         comboCount = comboCount + 1;
         
     }
 
-    IEnumerator ComboTimer()
+    IEnumerator ComboTimer(Vector3 pos)
     {
         // Wait for a set amount of time (e.g., 5 seconds)
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(comboWait);
 
         // Check the condition
         if (comboCount > 2)
@@ -78,6 +79,8 @@ public class GameManager : MonoBehaviour
             // Condition was met within the specified time
             //Debug.Log("Combo! "+comboCount.ToString());
             comboText.text = comboCount.ToString() + " FRUIT COMBO! \n +" + comboCount.ToString();
+            comboText.transform.position = pos;
+            Debug.Log(pos);
             comboText.enabled = true;
             IncreaseScore(comboCount);
             Invoke("DisableText", 3f);
