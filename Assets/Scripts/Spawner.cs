@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [Header("Spawn Objects")]
     public GameObject[] fruitToSpawnPrefabs;
     public GameObject bombPrefab;
-
     public Transform[] spawnPlaces;
+    [Header("Spawn Values")]
     public float minWait = 0.5f;
     public float maxWait = 1.3f;
     public float minForce = 10f;

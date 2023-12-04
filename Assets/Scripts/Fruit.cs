@@ -6,8 +6,10 @@ public class Fruit : MonoBehaviour
 {
     public GameObject slicedFruitPrefab;
     public float explosionRadius = 5f;
-    private GameManager myGameManager;
+    
     public int scoreAmount = 3;
+
+    private GameManager myGameManager;
 
     private void Start()
     {
