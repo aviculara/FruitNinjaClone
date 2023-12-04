@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject fruitToSpawnPrefab;
+    public GameObject[] fruitToSpawnPrefabs;
+    public GameObject bombPrefab;
+
     public Transform[] spawnPlaces;
     public float minWait = 0.5f;
     public float maxWait = 1.3f;
     public float minForce = 10f;
     public float maxForce = 20f;
+    public int chanceOfBomb = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,22 @@ public class Spawner : MonoBehaviour
         {
             Transform t = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
             yield return new WaitForSeconds(Random.Range(minWait,maxWait));
-            GameObject fruit = Instantiate(fruitToSpawnPrefab, t.transform.position , t.transform.rotation);
+
+            GameObject toSpawn = null;
+
+            float rnd = Random.Range(0, 100);
+
+            if(rnd < chanceOfBomb)
+            {
+                toSpawn = bombPrefab;
+            }
+            else
+            {
+                toSpawn = fruitToSpawnPrefabs[Random.Range(0, fruitToSpawnPrefabs.Length)];
+            }
+            
+
+            GameObject fruit = Instantiate(toSpawn, t.transform.position , t.transform.rotation);
 
             fruit.GetComponent<Rigidbody2D>().AddForce(
                 t.transform.up*Random.Range(minForce,maxForce), ForceMode2D.Impulse);
