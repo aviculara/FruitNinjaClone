@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Combo Elements")]
     public GameObject blade;
     private int comboCount = 0;
+    
 
     private void getHighscore()
     {
