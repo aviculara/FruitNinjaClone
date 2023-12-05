@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public Text comboText;
     [Header("Game Over Elements")]
     public GameObject gameOverPanel;
-
+    [Header("Combo Elements")]
+    public GameObject blade;
     private int comboCount = 0;
 
     private void getHighscore()
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         //PlayerPrefs.SetInt("Highscore", 15);
         getHighscore();
         comboText.enabled = false;
+        //GameObject blade = GameObject.FindGameObjectWithTag("Blade");
     }
     public void IncreaseScore(int addedPoints)
     {
@@ -57,18 +59,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void CheckForCombo(Vector3 pos)
+    public void CheckForCombo()
     {
         if (comboCount == 0)
         {
-            StartCoroutine(ComboTimer(pos));
+            StartCoroutine(ComboTimer());
         }
 
         comboCount = comboCount + 1;
         
     }
 
-    IEnumerator ComboTimer(Vector3 pos)
+    IEnumerator ComboTimer()
     {
         // Wait for a set amount of time (e.g., 5 seconds)
         yield return new WaitForSeconds(comboWait);
@@ -79,8 +81,10 @@ public class GameManager : MonoBehaviour
             // Condition was met within the specified time
             //Debug.Log("Combo! "+comboCount.ToString());
             comboText.text = comboCount.ToString() + " FRUIT COMBO! \n +" + comboCount.ToString();
-            comboText.transform.position = pos;
-            Debug.Log(pos);
+            Vector3 bladePos = blade.transform.position;
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(bladePos);
+            comboText.transform.position = screenPos;
+            //Debug.Log(pos);
             comboText.enabled = true;
             IncreaseScore(comboCount);
             Invoke("DisableText", 3f);

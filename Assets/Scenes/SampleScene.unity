@@ -709,11 +709,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   highscore: 0
-  comboWait: 4
+  comboWait: 1
   scoreText: {fileID: 725041578}
   highscoreText: {fileID: 1123117808}
   comboText: {fileID: 2058364757}
   gameOverPanel: {fileID: 1287135286}
+  blade: {fileID: 1887605647}
 --- !u!4 &803734196
 Transform:
   m_ObjectHideFlags: 0
